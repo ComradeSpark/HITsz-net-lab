@@ -10,7 +10,19 @@
  */
 void ethernet_in(buf_t *buf)
 {
-    // TO-DO
+    //获取数据包的起始地址
+    ether_hdr_t *eth_hdr = (ether_hdr_t *)buf->data;
+
+    // 判断数据长度，如果数据长度小于以太网头部长度，则认为数据包不完整，丢弃不处理
+    if (buf->len < sizeof(ether_hdr_t))
+        return;
+
+    // 调用buf_remove_header()函数移除加以太网包头
+    buf_remove_header(buf, sizeof(ether_hdr_t));
+
+
+    // 调用net_in()函数向上层传递数据包
+    net_in(buf, swap16(eth_hdr->protocol16), eth_hdr->src);
 }
 /**
  * @brief 处理一个要发送的数据包
@@ -21,7 +33,20 @@ void ethernet_in(buf_t *buf)
  */
 void ethernet_out(buf_t *buf, const uint8_t *mac, net_protocol_t protocol)
 {
-    // TO-DO
+    // 长度填充
+    int data_len = buf->len;
+    if(data_len < ETHERNET_MIN_TRANSPORT_UNIT) {
+        buf_add_padding(buf, ETHERNET_MIN_TRANSPORT_UNIT - data_len);
+    }
+    //添加以太网包头
+    buf_add_header(buf, sizeof(ether_hdr_t));
+    ether_hdr_t *hdr = (ether_hdr_t *)buf->data;
+    memcpy(hdr->dst, mac, NET_MAC_LEN);
+    memcpy(hdr->src, net_if_mac, NET_MAC_LEN);
+    hdr->protocol16 = swap16(protocol);
+
+    driver_send(buf);
+
 }
 /**
  * @brief 初始化以太网协议
