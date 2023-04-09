@@ -1,3 +1,60 @@
-Start testing: Apr 08 16:45 ?D1¨²¡À¨º¡Á?¨º¡À??
+Start testing: Apr 09 22:40 ?D1¨²¡À¨º¡Á?¨º¡À??
 ----------------------------------------------------------
-End testing: Apr 08 16:45 ?D1¨²¡À¨º¡Á?¨º¡À??
+2/6 Testing: eth_out
+2/6 Test: eth_out
+Command: "C:/Users/LiuYuZhe/Desktop/net-lab/build/eth_out.exe" "C:/Users/LiuYuZhe/Desktop/net-lab/testing/data/eth_out"
+Directory: C:/Users/LiuYuZhe/Desktop/net-lab/build
+"eth_out" start time: Apr 09 22:40 ?D1¨²¡À¨º¡Á?¨º¡À??
+Output:
+----------------------------------------------------------
+[0;34mTest start
+[0;34mFeeding input 010102030405060708091011121314151617[0;34m
+Sample input all processed, checking output
+[0;34mChecking log file(compare with demo).
+[0;32mRound 1: no differences
+[0;32mRound 2: no differences
+[0;32mRound 3: no differences
+[0;32mRound 4: no differences
+[0;32mRound 5: no differences
+[0;32mRound 6: no differences
+[0;32mRound 7: no differences
+[0;32mRound 8: no differences
+[0;32mRound 9: no differences
+[0;32mRound 10: no differences
+[0;32mRound 11: no differences
+[0;32mRound 12: no differences
+[0;32mRound 13: no differences
+[0;32mRound 14: no differences
+[0;32mRound 15: no differences
+[0;32mRound 16: no differences
+[0;32mRound 17: no differences
+[1;32m====> All log rounds are the same to the demo.
+[0m[0;34mChecking pcap output file(compare with demo).
+[0;32mPacket 1: no differences
+[0;32mPacket 2: no differences
+[0;32mPacket 3: no differences
+[0;32mPacket 4: no differences
+[0;32mPacket 5: no differences
+[0;32mPacket 6: no differences
+[0;32mPacket 7: no differences
+[0;32mPacket 8: no differences
+[0;32mPacket 9: no differences
+[0;32mPacket 10: no differences
+[0;32mPacket 11: no differences
+[0;32mPacket 12: no differences
+[0;32mPacket 13: no differences
+[0;32mPacket 14: no differences
+[0;32mPacket 15: no differences
+[0;32mPacket 16: no differences
+[0;32mPacket 17: no differences
+[1;32m====> All packets are the same to the demo.
+[0m
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"eth_out" end time: Apr 09 22:40 ?D1¨²¡À¨º¡Á?¨º¡À??
+"eth_out" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Apr 09 22:40 ?D1¨²¡À¨º¡Á?¨º¡À??

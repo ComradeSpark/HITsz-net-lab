@@ -8,7 +8,9 @@
 		"cmake.generator": "MinGW Makefiles",
 		"files.associations": {
 			"tcp.h": "c",
-			"driver.h": "c"
+			"driver.h": "c",
+			"ip.h": "c",
+			"config.h": "c"
 		}
 	}
 }
