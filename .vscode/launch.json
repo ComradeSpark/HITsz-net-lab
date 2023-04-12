@@ -6,8 +6,8 @@
             "type": "cppdbg",
             "request": "launch",
             // start
-            "program": "${workspaceFolder}\\build\\eth_in.exe",
-            "args": ["testing\\data\\eth_in"],
+            "program": "${workspaceFolder}\\build\\arp_test.exe",
+            "args": ["testing\\data\\arp_test"],
             // end
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
