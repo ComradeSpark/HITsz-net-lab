@@ -1,15 +1,14 @@
-Start testing: Apr 12 12:41 ?D1¨²¡À¨º¡Á?¨º¡À??
+Start testing: Apr 13 23:29 ?D1¨²¡À¨º¡Á?¨º¡À??
 ----------------------------------------------------------
-3/6 Testing: arp_test
-3/6 Test: arp_test
-Command: "C:/Users/LiuYuZhe/Desktop/net-lab/build/arp_test.exe" "C:/Users/LiuYuZhe/Desktop/net-lab/testing/data/arp_test"
+1/6 Testing: eth_in
+1/6 Test: eth_in
+Command: "C:/Users/LiuYuZhe/Desktop/net-lab/build/eth_in.exe" "C:/Users/LiuYuZhe/Desktop/net-lab/testing/data/eth_in"
 Directory: C:/Users/LiuYuZhe/Desktop/net-lab/build
-"arp_test" start time: Apr 12 12:41 ?D1¨²¡À¨º¡Á?¨º¡À??
+"eth_in" start time: Apr 13 23:29 ?D1¨²¡À¨º¡Á?¨º¡À??
 Output:
 ----------------------------------------------------------
-[0;34mTest begin.
 [0;34mTest start
-[0;34mFeeding input 01010203040506070809101112131415[0;34m
+[0;34mFeeding input 010102030405060708091011121314151617[0;34m
 Sample input all processed, checking output
 [0;34mChecking log file(compare with demo).
 [0;32mRound 1: no differences
@@ -27,26 +26,16 @@ Sample input all processed, checking output
 [0;32mRound 13: no differences
 [0;32mRound 14: no differences
 [0;32mRound 15: no differences
+[0;32mRound 16: no differences
+[0;32mRound 17: no differences
 [1;32m====> All log rounds are the same to the demo.
-[0m[0;34mChecking pcap output file(compare with demo).
-[0;32mPacket 1: no differences
-[0;32mPacket 2: no differences
-[0;32mPacket 3: no differences
-[0;32mPacket 4: no differences
-[0;32mPacket 5: no differences
-[0;32mPacket 6: no differences
-[0;32mPacket 7: no differences
-[0;32mPacket 8: no differences
-[0;32mPacket 9: no differences
-[1;32m====> All packets are the same to the demo.
-[0m[1;33mFor this test, log is only a reference. Your implementation is OK if your pcap file is the same to the demo pcap file.
 [0m
 <end of output>
-Test time =   0.04 sec
+Test time =   0.03 sec
 ----------------------------------------------------------
 Test Passed.
-"arp_test" end time: Apr 12 12:41 ?D1¨²¡À¨º¡Á?¨º¡À??
-"arp_test" time elapsed: 00:00:00
+"eth_in" end time: Apr 13 23:29 ?D1¨²¡À¨º¡Á?¨º¡À??
+"eth_in" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Apr 12 12:41 ?D1¨²¡À¨º¡Á?¨º¡À??
+End testing: Apr 13 23:29 ?D1¨²¡À¨º¡Á?¨º¡À??
