@@ -508,7 +508,8 @@ CMakeFiles/main.dir/src/ip.c.obj: ../src/ip.c \
   ../include/net.h \
   ../include/ethernet.h \
   ../include/arp.h \
-  ../include/icmp.h
+  ../include/icmp.h \
+  ../include/udp.h
 
 CMakeFiles/main.dir/src/main.c.obj: ../src/main.c \
   ../include/net.h \

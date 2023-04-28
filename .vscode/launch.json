@@ -6,8 +6,8 @@
             "type": "cppdbg",
             "request": "launch",
             // start
-            "program": "${workspaceFolder}\\build\\arp_test.exe",
-            "args": ["testing\\data\\arp_test"],
+            "program": "${workspaceFolder}\\build\\ip_test.exe",
+            "args": ["testing\\data\\ip_test"],
             // end
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

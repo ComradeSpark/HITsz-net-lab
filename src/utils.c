@@ -78,4 +78,25 @@ uint8_t ip_prefix_match(uint8_t *ipa, uint8_t *ipb)
 uint16_t checksum16(uint16_t *data, size_t len)
 {
     // TO-DO
+    // 以32位缓存最大可能的进位
+    uint32_t checksum = 0;
+    
+    while(len > 1) {
+        checksum += swap16(*data);
+        data++;
+        len -= sizeof(uint16_t);
+
+        checksum = (checksum >> 16) + (checksum & 0xffff);
+        checksum += (checksum >> 16);
+    }
+
+    // 1 Byte Tail
+    if (len != 0) {
+        checksum += *((uint8_t *)data);
+        checksum = (checksum >> 16) + (checksum & 0xffff);
+        checksum += (checksum >> 16);
+    }
+    
+    // 取反, recast
+    return ~(uint16_t)checksum;
 }

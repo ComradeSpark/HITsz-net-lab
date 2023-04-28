@@ -10,7 +10,8 @@
 			"tcp.h": "c",
 			"driver.h": "c",
 			"ip.h": "c",
-			"config.h": "c"
+			"config.h": "c",
+			"icmp.h": "c"
 		}
 	}
 }

@@ -23,6 +23,7 @@ typedef struct ip_hdr
 #define IP_HDR_LEN_PER_BYTE 4      //ip包头长度单位
 #define IP_HDR_OFFSET_PER_BYTE 8   //ip分片偏移长度单位
 #define IP_VERSION_4 4             //ipv4
+#define IP_HDR_LEN 20              //ip包头部Byte长度
 #define IP_MORE_FRAGMENT (1 << 13) //ip分片mf位
 void ip_in(buf_t *buf, uint8_t *src_mac);
 void ip_out(buf_t *buf, uint8_t *ip, net_protocol_t protocol);
