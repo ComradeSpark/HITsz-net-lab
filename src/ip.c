@@ -5,7 +5,6 @@
 #include "icmp.h"
 #include "udp.h"
 
-int send_id = 0;
 
 /**
  * @brief 处理一个收到的数据包
@@ -40,23 +39,21 @@ void ip_in(buf_t *buf, uint8_t *src_mac)
     // padding remove
     if(buf->len > swap16(ip_hdr->total_len16))
         buf_remove_padding(buf, buf->len - swap16(ip_hdr->total_len16));
-    
-    // hdr remove
-    buf_remove_header(buf, IP_HDR_LEN);
 
     // sending
     switch (ip_hdr->protocol) {
-    case NET_PROTOCOL_ICMP:
-        icmp_in(buf, ip_hdr->src_ip);
-        break;
-    case NET_PROTOCOL_UDP:
-        udp_in(buf, ip_hdr->src_ip);
-        break;
-    default:
-        icmp_unreachable(buf, ip_hdr->src_ip, ICMP_CODE_PROTOCOL_UNREACH);
-        break;
+        // if one of ICMP UDP TCP, send it out
+        case NET_PROTOCOL_ICMP:
+        case NET_PROTOCOL_UDP:
+        // case NET_PROTOCOL_TCP:
+            // hdr remove and send
+            buf_remove_header(buf, IP_HDR_LEN);
+            net_in(buf, ip_hdr->protocol, ip_hdr->src_ip);
+            break;
+        default:
+            icmp_unreachable(buf, ip_hdr->src_ip, ICMP_CODE_PROTOCOL_UNREACH);
     }
-    
+
     return;
 }
 
@@ -76,7 +73,7 @@ void ip_fragment_out(buf_t *buf, uint8_t *ip, net_protocol_t protocol, int id, u
     if(offset % 8 != 0)
         return;
     
-    // Head Adding and Filling
+    // Head Adding and Loading
     buf_add_header(buf, sizeof(ip_hdr_t));
 
     ip_hdr_t *hdr = (ip_hdr_t *)buf->data;
@@ -89,8 +86,9 @@ void ip_fragment_out(buf_t *buf, uint8_t *ip, net_protocol_t protocol, int id, u
     uint16_t flags_fragment = (offset >> 3) & 0x1fff;
       // Adding MF
     if(mf == 1) flags_fragment |= IP_MORE_FRAGMENT;
+
     hdr->flags_fragment16 = swap16(flags_fragment);
-    hdr->ttl = 64;
+    hdr->ttl = IP_DEFALUT_TTL;
     hdr->protocol = protocol;
 
     memcpy(hdr->src_ip, net_if_ip, NET_IP_LEN);
@@ -114,26 +112,29 @@ void ip_fragment_out(buf_t *buf, uint8_t *ip, net_protocol_t protocol, int id, u
 void ip_out(buf_t *buf, uint8_t *ip, net_protocol_t protocol)
 {
     // TO-DO
+    static int send_id = 0;
     size_t max_load_len = 1500 - sizeof(ip_hdr_t);
 
     // Fragment Send Out
-    int i = 0;
-    for(; (i+1) * max_load_len < buf->len; i++) {
+    size_t fragmented_len = 0;
+    while(fragmented_len + max_load_len < buf->len) {
         buf_t ip_buf;
         buf_init(&ip_buf, max_load_len);
-        memcpy(ip_buf.data, buf->data + i * max_load_len, max_load_len);
+        memcpy(ip_buf.data, buf->data + fragmented_len, max_load_len);
 
-        // offset (per 8 bytes)
-        ip_fragment_out(&ip_buf, ip, protocol, send_id, i * max_load_len, 1);
+        // offset per byte
+        ip_fragment_out(&ip_buf, ip, protocol, send_id, fragmented_len, 1);
+        fragmented_len += max_load_len;
     }
     
     // Tail Processing
-    if(buf->len - i * max_load_len >= 0) {
+    size_t tail_len = buf->len - fragmented_len;
+    if(tail_len > 0) {
         buf_t ip_buf_tail;
-        buf_init(&ip_buf_tail, buf->len - i * max_load_len);
-        memcpy(ip_buf_tail.data, buf->data + i * max_load_len, buf->len - i * max_load_len);
+        buf_init(&ip_buf_tail, tail_len);
+        memcpy(ip_buf_tail.data, buf->data + fragmented_len, tail_len);
 
-        ip_fragment_out(&ip_buf_tail, ip, protocol, send_id, i * max_load_len, 0);
+        ip_fragment_out(&ip_buf_tail, ip, protocol, send_id, fragmented_len, 0);
     }
 
     // Global Package ID

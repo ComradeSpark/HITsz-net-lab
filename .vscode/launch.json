@@ -6,8 +6,8 @@
             "type": "cppdbg",
             "request": "launch",
             // start
-            "program": "${workspaceFolder}\\build\\ip_test.exe",
-            "args": ["testing\\data\\ip_test"],
+            "program": "${workspaceFolder}\\build\\icmp_test.exe",
+            "args": ["testing\\data\\icmp_test"],
             // end
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

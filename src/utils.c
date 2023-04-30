@@ -85,18 +85,16 @@ uint16_t checksum16(uint16_t *data, size_t len)
         checksum += swap16(*data);
         data++;
         len -= sizeof(uint16_t);
-
-        checksum = (checksum >> 16) + (checksum & 0xffff);
-        checksum += (checksum >> 16);
     }
 
     // 1 Byte Tail
     if (len != 0) {
-        checksum += *((uint8_t *)data);
-        checksum = (checksum >> 16) + (checksum & 0xffff);
-        checksum += (checksum >> 16);
+        checksum += *(uint8_t *)data;
     }
     
+    checksum = (checksum >> 16) + (checksum & 0xffff);
+    checksum += (checksum >> 16);
+
     // 取反, recast
     return ~(uint16_t)checksum;
 }
