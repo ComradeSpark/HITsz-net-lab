@@ -1,3 +1,55 @@
-Start testing: Apr 30 20:29 ?D1¨²¡À¨º¡Á?¨º¡À??
+Start testing: May 01 00:33 ?D1¨²¡À¨º¡Á?¨º¡À??
 ----------------------------------------------------------
-End testing: Apr 30 20:29 ?D1¨²¡À¨º¡Á?¨º¡À??
+6/6 Testing: icmp_test
+6/6 Test: icmp_test
+Command: "C:/Users/LiuYuZhe/Desktop/net-lab/build/icmp_test.exe" "C:/Users/LiuYuZhe/Desktop/net-lab/testing/data/icmp_test"
+Directory: C:/Users/LiuYuZhe/Desktop/net-lab/build
+"icmp_test" start time: May 01 00:33 ?D1¨²¡À¨º¡Á?¨º¡À??
+Output:
+----------------------------------------------------------
+[0;34mTest begin.
+[0;34mFeeding input 01010203040506070809101112131415[0;34m
+Sample input all processed, checking output
+[0;34mChecking log file(compare with demo).
+[0;32mRound 1: no differences
+[0;32mRound 2: no differences
+[0;32mRound 3: no differences
+[0;32mRound 4: no differences
+[0;32mRound 5: no differences
+[0;32mRound 6: no differences
+[0;32mRound 7: no differences
+[0;32mRound 8: no differences
+[0;32mRound 9: no differences
+[0;32mRound 10: no differences
+[0;32mRound 11: no differences
+[0;32mRound 12: no differences
+[0;32mRound 13: no differences
+[0;32mRound 14: no differences
+[0;32mRound 15: no differences
+[1;32m====> All log rounds are the same to the demo.
+[0m[0;34mChecking pcap output file(compare with demo).
+[0;32mPacket 1: no differences
+[0;32mPacket 2: no differences
+[0;32mPacket 3: no differences
+[0;32mPacket 4: no differences
+[0;32mPacket 5: no differences
+[0;32mPacket 6: no differences
+[0;32mPacket 7: no differences
+[0;32mPacket 8: no differences
+[0;32mPacket 9: no differences
+[0;32mPacket 10: no differences
+[0;32mPacket 11: no differences
+[0;32mPacket 12: no differences
+[0;32mPacket 13: no differences
+[1;32m====> All packets are the same to the demo.
+[0m[1;33mFor this test, log is only a reference. Your implementation is OK if your pcap file is the same to the demo pcap file.
+[0m
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"icmp_test" end time: May 01 00:33 ?D1¨²¡À¨º¡Á?¨º¡À??
+"icmp_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: May 01 00:33 ?D1¨²¡À¨º¡Á?¨º¡À??
