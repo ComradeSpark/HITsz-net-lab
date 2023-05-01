@@ -21,7 +21,7 @@ static void icmp_resp(buf_t *req_buf, uint8_t *src_ip)
 
     // Renew Checksum
     icmp_hdr->checksum16 = 0;
-    icmp_hdr->checksum16 = swap16(checksum16((uint16_t *)txbuf.data, txbuf.len));
+    icmp_hdr->checksum16 = checksum16((uint16_t *)txbuf.data, txbuf.len);
 
     // Sending
     ip_out(&txbuf, src_ip, NET_PROTOCOL_ICMP);
@@ -74,7 +74,7 @@ void icmp_unreachable(buf_t *recv_buf, uint8_t *src_ip, icmp_code_t code)
 
     // Checksum (ATTENTION: CHECKSUM OF MSG, NOT HEAD!)
     icmp_hdr->checksum16 = 0;
-    icmp_hdr->checksum16 = swap16(checksum16((uint16_t *)txbuf.data, txbuf.len));
+    icmp_hdr->checksum16 = checksum16((uint16_t *)txbuf.data, txbuf.len);
     
     // Sending
     ip_out(&txbuf, src_ip, NET_PROTOCOL_ICMP);

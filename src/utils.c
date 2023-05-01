@@ -82,7 +82,7 @@ uint16_t checksum16(uint16_t *data, size_t len)
     uint32_t checksum = 0;
     
     while(len > 1) {
-        checksum += swap16(*data);
+        checksum += *data;
         data++;
         len -= sizeof(uint16_t);
     }

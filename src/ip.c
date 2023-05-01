@@ -28,7 +28,7 @@ void ip_in(buf_t *buf, uint8_t *src_mac)
     // checksum check
     uint16_t origin_checksum = ip_hdr->hdr_checksum16;
     ip_hdr->hdr_checksum16 = 0;
-    ip_hdr->hdr_checksum16 = swap16(checksum16((uint16_t *)buf->data, IP_HDR_LEN));
+    ip_hdr->hdr_checksum16 = checksum16((uint16_t *)buf->data, IP_HDR_LEN);
     if(origin_checksum != ip_hdr->hdr_checksum16)
         return;
     
@@ -96,7 +96,7 @@ void ip_fragment_out(buf_t *buf, uint8_t *ip, net_protocol_t protocol, int id, u
 
     // Checksum
     hdr->hdr_checksum16 = 0;
-    hdr->hdr_checksum16 = swap16(checksum16((uint16_t *)buf->data, sizeof(ip_hdr_t)));
+    hdr->hdr_checksum16 = checksum16((uint16_t *)buf->data, sizeof(ip_hdr_t));
 
     // Send
     arp_out(buf, ip);
