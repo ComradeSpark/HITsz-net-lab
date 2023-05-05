@@ -81,8 +81,6 @@ static void close_http(tcp_connect_t* tcp) {
 
 static void send_file(tcp_connect_t* tcp, const char* url) {
     FILE* file;
-    uint32_t size;
-    // const char* content_type = "text/html";
     char file_path[255];
     char tx_buffer[1024];
 
@@ -94,8 +92,32 @@ static void send_file(tcp_connect_t* tcp, const char* url) {
     注意，本实验的WEB服务器网页存放在XHTTP_DOC_DIR目录中
     */
 
-   // TODO
+    // Path Pasting and Concating
+    memcpy(file_path, XHTTP_DOC_DIR, sizeof(XHTTP_DOC_DIR));
 
+    if(strlen(url) == 1)
+        strcat(file_path, "/index.html");
+    else
+        strcat(file_path, url);
+
+    // File Open and Sending
+    file = fopen(file_path, "rb");
+    if(file == NULL) {
+        sprintf(tx_buffer, "HTTP/1.0 404 NOT FOUND\r\nSever: \r\nContent-Type: text/html\r\n\r\n");
+        http_send(tcp, tx_buffer, strlen(tx_buffer));
+    }
+    else {
+        sprintf(tx_buffer, "HTTP/1.0 200 OK\r\nSever: \r\nContent-Type: text/html\r\n\r\n");
+        http_send(tcp, tx_buffer, strlen(tx_buffer));
+
+        memset(tx_buffer, 0, sizeof(tx_buffer));
+        while(fread(tx_buffer, sizeof(char), sizeof(tx_buffer), file) > 0) {
+            http_send(tcp, tx_buffer, sizeof(tx_buffer));
+            memset(tx_buffer, 0, sizeof(tx_buffer));
+        }
+        
+        fclose(file);
+    }
 }
 
 static void http_handler(tcp_connect_t* tcp, connect_state_t state) {
@@ -129,7 +151,7 @@ void http_server_run(void) {
     char rx_buffer[1024];
 
     while ((tcp = http_fifo_out(&http_fifo_v)) != NULL) {
-        int i;
+        int i, j;
         char* c = rx_buffer;
 
 
@@ -137,28 +159,47 @@ void http_server_run(void) {
         1、调用get_line从rx_buffer中获取一行数据，如果没有数据，则调用close_http关闭tcp，并继续循环
         */
 
-       // TODO
-
+        // TODO
+        size_t size = get_line(tcp, c, sizeof(rx_buffer) - 1);
+        if(size == 0) {
+            close_http(tcp);
+            continue;
+        }
 
         /*
         2、检查是否有GET请求，如果没有，则调用close_http关闭tcp，并继续循环
         */
 
-       // TODO
+        // TODO
+        if(size < 5 || c[0] != 'G' || c[1] != 'E' || c[2] != 'T') {
+            close_http(tcp);
+            continue;
+        }
 
 
         /*
         3、解析GET请求的路径，注意跳过空格，找到GET请求的文件，调用send_file发送文件
         */
 
-       // TODO
+        // TODO
+        i = 4;
+        j = 0;
 
+        while(c[i] != ' '){
+            url_path[j] = c[i];
+            i++;
+            j++;
+        }
+        url_path[j] = '\0';
+
+        send_file(tcp, url_path);
 
         /*
         4、调用close_http关掉连接
         */
 
-       // TODO
+        // TODO
+        close_http(tcp);
 
 
         printf("!! final close\n");

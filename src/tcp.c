@@ -280,7 +280,7 @@ size_t tcp_connect_write(tcp_connect_t* connect, const uint8_t* data, size_t len
  * @param src_ip
  */
 void tcp_in(buf_t* buf, uint8_t* src_ip) {
-    printf("<<< tcp_in >>>\n");
+    // printf("<<< tcp_in >>>\n");
 
     /*
     1、大小检查，检查buf长度是否小于tcp头部，如果是，则丢弃
@@ -372,16 +372,10 @@ void tcp_in(buf_t* buf, uint8_t* src_ip) {
     if(connect->state == TCP_LISTEN) {
         if(flags.rst) 
             goto close_tcp;
-        else if(!flags.syn) {
-            printf("!!! reset tcp !!!\n");
-            connect->next_seq = 0;
-            connect->ack = seq_num + 1;
-            buf_init(&txbuf, 0);
-            tcp_send(&txbuf, connect, tcp_flags_ack_rst);
-        }
+        else if(!flags.syn)
+            goto reset_tcp;
         else {
             init_tcp_connect_rcvd(connect);
-            connect->state = TCP_SYN_RCVD;
 
             connect->local_port = dst_port;
             connect->remote_port = src_port;
@@ -407,14 +401,8 @@ void tcp_in(buf_t* buf, uint8_t* src_ip) {
     */
 
     // TODO
-    if(seq_num != connect->ack) {
-        printf("!!! reset tcp !!!\n");
-        connect->next_seq = 0;
-        connect->ack = seq_num + 1;
-        buf_init(&txbuf, 0);
-        tcp_send(&txbuf, connect, tcp_flags_ack_rst);
-        return;
-    }
+    if(seq_num != connect->ack)
+        goto reset_tcp;
 
     /* 
     10、检查flags是否有rst标志，如果有，则close_tcp连接重置
@@ -579,14 +567,14 @@ void tcp_in(buf_t* buf, uint8_t* src_ip) {
     }
     return;
 
-// reset_tcp:
-//     printf("!!! reset tcp !!!\n");
-//     connect->next_seq = 0;
-//     connect->ack = get_seq + 1;
-//     buf_init(&txbuf, 0);
-//     tcp_send(&txbuf, connect, tcp_flags_ack_rst);
-    close_tcp:
-        release_tcp_connect(connect);
-        map_delete(&connect_table, &key);
-        return;
+reset_tcp:
+    printf("!!! reset tcp !!!\n");
+    connect->next_seq = 0;
+    connect->ack = seq_num + 1;
+    buf_init(&txbuf, 0);
+    tcp_send(&txbuf, connect, tcp_flags_ack_rst);
+close_tcp:
+    release_tcp_connect(connect);
+    map_delete(&connect_table, &key);
+    return;
 }

@@ -6,8 +6,8 @@
             "type": "cppdbg",
             "request": "launch",
             // start
-            "program": "${workspaceFolder}\\build\\icmp_test.exe",
-            "args": ["testing\\data\\icmp_test"],
+            "program": "${workspaceFolder}\\build\\main.exe",
+            "args": ["testing\\data\\main"],
             // end
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
