@@ -45,7 +45,7 @@ void ip_in(buf_t *buf, uint8_t *src_mac)
         // if one of ICMP UDP TCP, send it out
         case NET_PROTOCOL_ICMP:
         case NET_PROTOCOL_UDP:
-        // case NET_PROTOCOL_TCP:
+        case NET_PROTOCOL_TCP:
             // hdr remove and send
             buf_remove_header(buf, IP_HDR_LEN);
             net_in(buf, ip_hdr->protocol, ip_hdr->src_ip);
