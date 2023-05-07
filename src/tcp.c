@@ -465,8 +465,8 @@ void tcp_in(buf_t* buf, uint8_t* src_ip) {
         /*
         15、这里先处理ACK的值，
             如果是ack包，
-            且unack_seq小于sequence number（说明有部分数据被对端接收确认了，否则可能是之前重发的ack，可以不处理），
-            且next_seq大于sequence number // why?
+            且unack_seq小于ack number（说明有部分数据被对端接收确认了，否则可能是之前重发的ack，可以不处理），
+            且next_seq大于ack number // why?
             则调用buf_remove_header函数，去掉被对端接收确认的部分数据，并更新unack_seq值
             
         */
